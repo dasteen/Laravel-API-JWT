@@ -16,3 +16,18 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
+
+    Route::post('login', 'LoginController@authenticate')->name('login.post');
+
+//    Route::get('users', 'LoginController@index')->name('index')->middleware('jwt.auth');
+
+//    Route::group(['prefix' => 'posts', 'as' => 'posts.', 'middleware' => 'jwt.auth'], function () {
+//
+//
+//    });
+
+
+});
