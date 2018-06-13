@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
 
 class LoginController extends Controller
 {
@@ -25,9 +24,6 @@ class LoginController extends Controller
                 return Response::sendError(['error' => trans('auth.failed')], 401);
             }
 
-            /*
-             * Check to see if the users account is confirmed and active
-             */
             $user = auth()->user();
 
             $token = JWTAuth::fromUser($user, [
@@ -37,20 +33,10 @@ class LoginController extends Controller
 
 
         } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
             return Response::sendError(['error' => trans('auth.failed')], 500);
         }
 
-        // all good so return the token
         return Response::sendJSON(compact('token'));
     }
 
-//    public function index()
-//    {
-//
-//        $token = JWTAuth::getPayload();
-//        $token = json_decode($token, true);
-//
-//        return Response::sendJSON(compact('token'));
-//    }
 }

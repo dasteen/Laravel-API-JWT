@@ -20,14 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
 
-    Route::post('login', 'LoginController@authenticate')->name('login.post');
+    Route::post('login', 'LoginController@authenticate')->name('login');
 
 //    Route::get('users', 'LoginController@index')->name('index')->middleware('jwt.auth');
 
-//    Route::group(['prefix' => 'posts', 'as' => 'posts.', 'middleware' => 'jwt.auth'], function () {
-//
-//
-//    });
-
+    Route::Resource('posts', 'PostController')->middleware('jwt.auth')
+        ->except(['create','edit','update']);
 
 });
